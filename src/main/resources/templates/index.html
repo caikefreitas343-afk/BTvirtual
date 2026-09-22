@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- O xmlns:th avisa ao navegador que esta página usa Thymeleaf -->
+<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual - Login</title>
+    
+    <!-- Link do Bootstrap 5 Local via Thymeleaf -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    
+    <!-- Link do seu CSS personalizado Local (CSS3) -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-light">
+
+    <!-- Exemplo de uma tela de login usando classes prontas do Bootstrap 5 -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
+            <h2 class="text-center text-primary mb-4">Biblioteca Virtual</h2>
+            
+            <form>
+                <div class="mb-3">
+                    <label for="matricula" class="form-label">Matrícula ou CPF</label>
+                    <input type="text" class="form-control" id="matricula" placeholder="Digite seu acesso">
+                </div>
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="senha" placeholder="Digite sua senha">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Script do Bootstrap 5 Local via Thymeleaf -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    
+    <!-- arquivo de JavaScript personalizado -->
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
