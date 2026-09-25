@@ -20,8 +20,8 @@ public class EmprestimoController {
     }
 
     @PostMapping 
-    public ResponseEntity<Emprestimo> realizarEmprestimo(@RequestParam UUID idUsuario, @RequestParam UUID LivroId) {
-        Emprestimo novoEmprestimo = emprestimoService.realizarEmprestimo(idUsuario, LivroId);
+    public ResponseEntity<Emprestimo> realizarEmprestimo(@RequestParam UUID idUsuario, @RequestParam UUID livroId) {
+        Emprestimo novoEmprestimo = emprestimoService.realizarEmprestimo(idUsuario, livroId);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoEmprestimo);
     }
 
@@ -35,12 +35,12 @@ public class EmprestimoController {
         return ResponseEntity.ok(emprestimoService.buscarPorId(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/devolucao")
     public ResponseEntity<Emprestimo> realizarDevolucao(@PathVariable UUID id) {
         return ResponseEntity.ok(emprestimoService.realizarDevolucao(id));
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}/renovar")
     public ResponseEntity<Emprestimo> renovarEmprestimo(@PathVariable UUID id) {
         return ResponseEntity.ok(emprestimoService.renovarEmprestimo(id));
     }

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class LivroController {
     
-    public final LivroService livroService;
+    private final LivroService livroService;
 
     public LivroController(LivroService livroService) {
         this.livroService = livroService;

@@ -12,6 +12,11 @@ public class Bibliotecario extends Usuario {
 	private String cargo;
     private String setor;
 
+    protected Bibliotecario() {
+        super();
+        setTipoUsuario(TipoUsuario.BIBLIOTECARIO);
+    }
+
     // Construtor vazio (Obrigatorio para o JPA)
 
     public Bibliotecario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor,TipoUsuario tipoUsuario) {

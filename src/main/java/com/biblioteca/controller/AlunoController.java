@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
-
 @RestController
 @RequestMapping("/api/alunos")
 public class AlunoController {

@@ -10,6 +10,8 @@ import java.util.UUID;
 @Service
 public class LivroService {
 
+    
+
     private final LivroRepository livroRepository;
     
 
@@ -18,6 +20,7 @@ public class LivroService {
     }
 
     public Livro salvar(Livro livro) {
+        validarLivro(livro);
         return livroRepository.save(livro);
     }
 
@@ -51,8 +54,19 @@ public class LivroService {
 
     public void deletar(UUID id) {
         // Garante que o livro existe antes de tentar deletar
-        Livro livro = buscarPorId(id);
-        livroRepository.delete(livro);
+        buscarPorId(id);
+        livroRepository.deleteById(id);
+    }
+
+    private void validarLivro(Livro livro) {
+        if (livro == null) {
+            throw new IllegalArgumentException("Livro é obrigatório.");
+        }
+        if (livro.getQuantidadeEstoque() == null || livro.getQuantidadeEstoque() < 0
+                || livro.getQuantidadeDisponivel() == null || livro.getQuantidadeDisponivel() < 0
+                || livro.getQuantidadeDisponivel() > livro.getQuantidadeEstoque()) {
+            throw new IllegalArgumentException("Estoque do livro é inválido.");
+        }
     }
     
 }

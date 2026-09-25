@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * AlunoService
+ */
 @Service
 public class AlunoService {
 
@@ -44,6 +47,7 @@ public class AlunoService {
     }
 
     public void deletar(UUID id) {
+        buscarPorId(id);
         alunoRepository.deleteById(id);
     }
 }

@@ -3,12 +3,16 @@ package com.biblioteca.entity;
 import jakarta.persistence.*;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 @Entity
 @Table(name = "livros")
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
 
     @Column(nullable = false, length = 150)

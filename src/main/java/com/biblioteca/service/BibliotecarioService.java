@@ -16,6 +16,9 @@ public class BibliotecarioService {
     }
 
     public Bibliotecario salvar(Bibliotecario bibliotecario) {
+        if (bibliotecario == null) {
+            throw new IllegalArgumentException("Bibliotecário é obrigatório.");
+        }
         return bibliotecarioRepository.save(bibliotecario);
     }
 
@@ -40,8 +43,8 @@ public class BibliotecarioService {
 
     public void deletar(UUID id) {
         // Garante que o bibliotecário existe antes de tentar deletar
-        Bibliotecario bibliotecario = buscarPorId(id); 
-        bibliotecarioRepository.delete(bibliotecario);
+        buscarPorId(id);
+        bibliotecarioRepository.deleteById(id);
     }
 }
 

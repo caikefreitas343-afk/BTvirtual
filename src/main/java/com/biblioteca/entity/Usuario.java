@@ -4,7 +4,9 @@ package com.biblioteca.entity;
 import jakarta.persistence.*;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -13,6 +15,7 @@ public class Usuario {
 
     @UuidGenerator 
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
 
     @Column(nullable = false, length = 100)

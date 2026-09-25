@@ -4,12 +4,16 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 @Entity
 @Table(name = "tb_emprestimos")
 public class Emprestimo {
     
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
 
     @ManyToOne
@@ -18,6 +22,7 @@ public class Emprestimo {
 
     @ManyToOne
     @JoinColumn(name = "livro_id", nullable = false)
+    @JdbcTypeCode(SqlTypes.BINARY)
     private Livro livro;
 
     @Column(nullable = false)

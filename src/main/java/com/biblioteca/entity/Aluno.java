@@ -32,7 +32,7 @@ public class Aluno extends Usuario {
     public void setTurma(String turma) { this.turma = turma; }
 
     public String getSerie() { return serie;}
-    public void setSerie(String Serie, String serie) { this.serie = serie;}
+    public void setSerie(String serie) { this.serie = serie;}
 
     public boolean ISBloqueado() { return bloqueado; }
     public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado;}

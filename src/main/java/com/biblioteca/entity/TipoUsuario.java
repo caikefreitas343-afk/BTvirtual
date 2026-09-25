@@ -4,7 +4,7 @@ public enum TipoUsuario {
     ALUNO,
     PROFESSOR,
     BIBLIOTECARIO,
-    GESTAO, 
+    GESTAO
 }
 
 

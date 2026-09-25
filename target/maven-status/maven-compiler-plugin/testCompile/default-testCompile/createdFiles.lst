@@ -1,0 +1,5 @@
+com\biblioteca\service\BibliotecarioServiceTest.class
+com\biblioteca\service\AlunoServiceTest.class
+com\biblioteca\service\ReservaServiceTest.class
+com\biblioteca\service\EmprestimoServiceTest.class
+com\biblioteca\service\LivroServiceTest.class
