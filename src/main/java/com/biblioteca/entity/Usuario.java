@@ -34,7 +34,7 @@ public class Usuario {
     @Column(nullable = false)
     protected TipoUsuario tipoUsuario;
 
-    // Construtor Vazio (Obrigatório para o JPA)
+    // Construtor COMPLETAMENTE Vazio (Obrigatório para o JPA)
     public Usuario() {}
 
     // Construtor Completo
