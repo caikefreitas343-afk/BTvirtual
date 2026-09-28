@@ -10,6 +10,7 @@ com\biblioteca\repository\EmprestimoRepository.class
 com\biblioteca\dto\EmprestimoDTO.class
 com\biblioteca\LibraryVirtualApplication.class
 com\biblioteca\entity\TipoUsuario.class
+com\biblioteca\dto\BibliotecarioDTO.class
 com\biblioteca\repository\BibliotecarioRepository.class
 com\biblioteca\controller\LivroController.class
 com\biblioteca\dto\LivroDTO.class
@@ -24,6 +25,7 @@ com\biblioteca\entity\Emprestimo.class
 com\biblioteca\entity\StatusEmprestimo.class
 com\biblioteca\repository\AlunoRepository.class
 com\biblioteca\service\BibliotecarioService.class
+com\biblioteca\dto\ReservaDTO.class
 com\biblioteca\service\LivroService.class
 com\biblioteca\entity\Aluno.class
 com\biblioteca\repository\ReservaRepository.class

@@ -13,7 +13,7 @@ import org.hibernate.type.SqlTypes;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
 
-    @UuidGenerator 
+    @UuidGenerator
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
