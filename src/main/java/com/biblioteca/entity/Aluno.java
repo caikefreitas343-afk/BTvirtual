@@ -16,7 +16,7 @@ public class Aluno extends Usuario {
     //Contrutor Vazio (Exigido pelo JPA)
     public Aluno() {
         super();
-        setTipoUsuario(TipoUsuario.ALUNO);
+        this.tipoUsuario = TipoUsuario.ALUNO;
     }
 
     // Construtor completo

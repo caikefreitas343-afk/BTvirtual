@@ -7,7 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "livros")
+@Table(name = "tb_livro")
 public class Livro {
 
     @Id
@@ -25,7 +25,7 @@ public class Livro {
     private String isbn;
 
     @Column (nullable = false)
-    private int anoPublicacao;
+    private Integer anoPublicacao;
 
     @Column (nullable = false, length = 50)
     private String genero;

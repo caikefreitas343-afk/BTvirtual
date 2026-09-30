@@ -14,7 +14,7 @@ public class Bibliotecario extends Usuario {
 
     protected Bibliotecario() {
         super();
-        setTipoUsuario(TipoUsuario.BIBLIOTECARIO);
+        this.tipoUsuario = TipoUsuario.BIBLIOTECARIO;
     }
 
     // Construtor vazio (Obrigatorio para o JPA)

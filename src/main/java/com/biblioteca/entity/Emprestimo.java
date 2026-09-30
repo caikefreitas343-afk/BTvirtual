@@ -16,13 +16,13 @@ public class Emprestimo {
     @JdbcTypeCode(SqlTypes.BINARY)
     private UUID id;
 
-    @ManyToOne
+    // Esse LAZY evita consultas gigantes desnecessárias no banco
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livro_id", nullable = false)
-    @JdbcTypeCode(SqlTypes.BINARY)
     private Livro livro;
 
     @Column(nullable = false)
@@ -31,12 +31,15 @@ public class Emprestimo {
     @Column(nullable = false)
     private LocalDateTime dataDevolucaoPrevista;
 
+    // Pode ser nulo, porque quando o empréstimo é criado, ainda não foi devolvido
     private LocalDateTime dataDevolucaoEfetiva;
 
+    @Column(nullable = false)
     private Integer quantidadeRenovacoes = 0;
 
+    // Utulizamos BigDecimal (Boa prática para dinheiro) Por exemplo, caso o Aluno perca um livro.
     @Enumerated (EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private StatusEmprestimo status;
 
     private Double valorMulta = 0.0;

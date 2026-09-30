@@ -29,7 +29,7 @@ public class EmprestimoService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-        if (usuario instanceof Aluno aluno && aluno.ISBloqueado()) {
+        if (usuario instanceof Aluno aluno && aluno.isBloqueado()) {
             throw new RuntimeException("Usuário bloqueado para empréstimos.");
         }
         
@@ -50,7 +50,7 @@ public class EmprestimoService {
         emprestimo.setUsuario(usuario);
         emprestimo.setLivro(livro);
         emprestimo.setDataEmprestimo(LocalDateTime.now());
-        emprestimo.setDataDevolucaoPrevista(LocalDateTime.now().plusDays(7)); // Prazo de 7 dias
+        emprestimo.setDataDevolucaoPrevista(LocalDateTime.now().plusDays(7)); // Prazo de 7 dias: sujeito a alterações
         emprestimo.setQuantidadeRenovacoes(0);
         emprestimo.setStatus(StatusEmprestimo.ATIVO);
 

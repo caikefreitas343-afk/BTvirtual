@@ -32,7 +32,7 @@ public class ReservaService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-        if (usuario instanceof Aluno aluno && aluno.ISBloqueado()) {
+        if (usuario instanceof Aluno aluno && aluno.isBloqueado()) {
             throw new RuntimeException("Usuário bloqueado para reservas.");
         }
 
