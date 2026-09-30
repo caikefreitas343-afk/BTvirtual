@@ -34,7 +34,8 @@ public class Aluno extends Usuario {
     public String getSerie() { return serie;}
     public void setSerie(String serie) { this.serie = serie;}
 
-    public boolean ISBloqueado() { return bloqueado; }
+    public boolean isBloqueado() { return bloqueado; }
+    
     public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado;}
 }
 
