@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+
+    <!-- fonte e icones externos-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Nosso Arquivo CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Container Principal da Tela que segue todo cartão -->
+    <div class="login-container">
+
+        <!-- LADO ESQUERDO PAINEL ROXO com boas vindas -->
+        <div class="left-panel">
+            <div class="welcome-box">
+                <h1>Bem-vindo!</h1>
+                <p>Faça login para continuar</p>
+            </div>
+
+            <!-- Elementos Decorativos Fluentes -->
+            <div class="decor-symbol plus-1">+</div>
+            <div class="decor-symbol plus-2">+</div>
+            <div class="decor-symbol circle-1"></div>
+            <div class="decor-symbol circle-2"></div>
+        </div>
+
+        <!-- LADO DIREITO PAINEL BRANCO com formulário de login -->
+        <div class="right-panel">
+            <h2>Entrar</h2>
+
+            <form class="login-form">
+                <!-- Campo do Usuario/e-mail -->
+                <div class="imput-box">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" placeholder="Usuário ou E-mail" required />
+                </div>
+
+                <!-- Campo da Senha -->
+                <div class="imput-box">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Senha" required />
+
+                    <!-- OPÇÕES lembare-me e Esqueci Senha -->
+                    <div class="options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" checked>
+                            Lembrar-me
+                        </label>
+                        <a href="#">Esqueci minha senha</a>
+                    </div>
+
+                    <!-- Botão de Login -->
+                    <button type="submit" class="btn-signin">Entrar</button>
+            </form>
+
+            <!-- Rodapé com link para cadastro -->
+            <p class="footer-text">
+                Não tem uma conta? <a href="#">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
