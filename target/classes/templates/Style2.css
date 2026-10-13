@@ -1,0 +1,321 @@
+/* =====================================================
+   1. RESET E CONFIGURAÇÃO GLOBAL
+   ===================================================== */
+
+/* O "*" seleciona TODOS os elementos da página. */
+* {
+    margin: 0;               /* remove as margens que o navegador coloca por padrão */
+    padding: 0;              /* remove os espaçamentos internos padrão */
+    box-sizing: border-box;  /* width/height passam a incluir padding e borda (fica bem mais fácil calcular tamanhos) */
+    font-family: 'Montserrat', sans-serif; /* fonte da imagem; se não carregar, usa a sans-serif do sistema */
+}
+
+/* Fundo da página inteira */
+body {
+    min-height: 100vh;       /* no mínimo a altura da tela (100vh = 100% da altura visível) */
+    display: flex;           /* flexbox: facilita centralizar o card */
+    justify-content: center; /* centraliza na horizontal */
+    align-items: center;     /* centraliza na vertical */
+    padding: 20px;           /* respiro nas bordas, principalmente no celular */
+    /* Lilás claro com duas "manchas" mais escuras desfocadas, como na referência */
+    background:
+        radial-gradient(circle at 5% 95%, #c4b5e6 0, transparent 35%),
+        radial-gradient(circle at 100% 70%, #8f78c4 0, transparent 30%),
+        #ab97d9;
+}
+
+/* =====================================================
+   2. CARD PRINCIPAL
+   ===================================================== */
+
+.login-container {
+    display: flex;           /* coloca o painel esquerdo e o direito lado a lado */
+    width: 1000px;           /* largura ideal no computador */
+    max-width: 100%;         /* em telas menores, nunca passa da largura da tela */
+    min-height: 560px;
+    background-color: #ffffff;
+    border-radius: 24px;     /* cantos arredondados do card */
+    overflow: hidden;        /* "corta" o que sair do card (necessário para os cantos arredondados valerem para os painéis e os enfeites) */
+    box-shadow: 0 20px 45px rgba(60, 30, 120, 0.25); /* sombra suave roxa embaixo do card */
+}
+
+/* =====================================================
+   3. PAINEL ESQUERDO
+   ===================================================== */
+
+.left-panel {
+    flex: 1;                 /* os dois painéis dividem o card meio a meio */
+    position: relative;      /* IMPORTANTE: os enfeites com position:absolute se posicionam em relação a este painel */
+    overflow: hidden;        /* esconde partes dos enfeites que passem da borda do painel */
+    color: #ffffff;          /* texto branco */
+    padding: 50px;
+    display: flex;
+    flex-direction: column;  /* itens empilhados na vertical */
+    justify-content: center; /* texto centralizado na vertical */
+    background: linear-gradient(135deg, #8e6bd0, #5b3fa6); /* degradê diagonal: roxo claro → roxo escuro */
+}
+
+/* Caixa do texto de boas-vindas */
+.welcome-box {
+    position: relative;      /* precisa de position + z-index para ficar POR CIMA dos enfeites */
+    z-index: 2;
+    max-width: 300px;        /* limita a largura para o texto quebrar em duas linhas */
+}
+
+.welcome-box h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+
+.welcome-box p {
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+/* =====================================================
+   4. ENFEITES DO PAINEL ESQUERDO (só visual, não têm função)
+   ===================================================== */
+
+/* SVG de fundo: manchas e linhas topográficas */
+.decor-bg {
+    position: absolute;      /* sai do fluxo normal e se encaixa no painel */
+    inset: 0;                /* atalho para top/right/bottom/left = 0 → cobre o painel inteiro */
+    width: 100%;
+    height: 100%;
+    z-index: 0;              /* fica atrás de tudo */
+    pointer-events: none;    /* o mouse "atravessa" o enfeite (não atrapalha cliques) */
+}
+
+/* Grade de bolinhas, feita sem imagem:
+   o radial-gradient desenha UMA bolinha e o background-size repete a cada 16px */
+.dots {
+    position: absolute;
+    top: 45px;
+    right: 70px;
+    width: 64px;             /* 4 colunas × 16px */
+    height: 160px;           /* 10 linhas × 16px */
+    background-image: radial-gradient(circle, #ffffff 2px, transparent 2.5px);
+    background-size: 16px 16px;
+    z-index: 1;
+}
+
+/* Classe comum a TODOS os símbolos decorativos (+ e círculos) */
+.decor-symbol {
+    position: absolute;      /* cada um é posicionado com top/left/right/bottom */
+    z-index: 1;
+    user-select: none;       /* impede selecionar com o mouse */
+    pointer-events: none;
+}
+
+/* ---- Sinal de "+" ----
+   Desenhado com duas linhas finas cruzadas (::before = horizontal, ::after = vertical).
+   Assim fica mais nítido que usar o caractere "+" */
+.plus {
+    width: 22px;
+    height: 22px;
+}
+
+.plus::before,
+.plus::after {
+    content: "";             /* obrigatório para o pseudo-elemento aparecer */
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.plus::before {              /* linha horizontal */
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    transform: translateY(-50%);
+}
+
+.plus::after {               /* linha vertical */
+    left: 50%;
+    top: 0;
+    width: 1.5px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.plus-1 { top: 45px;  left: 42%; }   /* "+" de cima */
+.plus-2 { bottom: 120px; left: 38%; } /* "+" de baixo */
+
+/* ---- Círculo vazado ----
+   Uma caixa quadrada com borda e border-radius: 50% (50% de arredondamento = círculo perfeito).
+   Sem background, então só aparece o contorno. */
+.circle {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+}
+
+.circle-1 { top: 105px; left: 62%; }  /* círculo de cima */
+.circle-2 { bottom: 40px; left: 30px; } /* círculo de baixo */
+
+/* =====================================================
+   5. PAINEL DIREITO (formulário)
+   ===================================================== */
+
+.right-panel {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* formulário centralizado na vertical */
+}
+
+.right-panel h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #5a5a5a;
+    margin-bottom: 28px;
+}
+
+/* O formulário empilha os campos com espaço fixo entre eles */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;               /* espaço entre cada item do formulário */
+}
+
+/* Caixa arredondada de cada campo (ícone + input dentro dela) */
+.input-box {
+    display: flex;
+    align-items: center;     /* ícone e texto alinhados no meio */
+    gap: 12px;               /* espaço entre o ícone e o texto */
+    padding: 14px 20px;
+    border: 1px solid #d6d6d6;
+    border-radius: 999px;    /* valor enorme = lados totalmente redondos (formato "pílula") */
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Quando o input dentro da caixa está em foco (clicado/digitando), a caixa toda ganha destaque */
+.input-box:focus-within {
+    border-color: #7a56c4;
+    box-shadow: 0 0 0 3px rgba(122, 86, 196, 0.15);
+}
+
+/* Ícone SVG dentro do campo */
+.input-box svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;          /* o ícone nunca "encolhe" se o texto for grande */
+    fill: #a8a8a8;           /* cor de preenchimento do ícone (cinza) */
+}
+
+/* O input em si: some a aparência padrão para usar o visual da .input-box */
+.input-box input {
+    width: 100%;
+    border: none;
+    outline: none;           /* o destaque de foco já é feito pela caixa (.input-box:focus-within) */
+    background: transparent;
+    font-size: 0.95rem;
+    color: #444444;
+}
+
+.input-box input::placeholder {  /* texto de dica ("Senha", etc.) */
+    color: #a8a8a8;
+}
+
+/* Linha "Lembrar-me" ←→ "Esqueci a senha" */
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* um item na ponta esquerda, outro na direita */
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #4f4b5b;
+}
+
+.checkbox-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    accent-color: #5b3fa6;   /* pinta a caixinha marcada de roxo */
+    width: 15px;
+    height: 15px;
+}
+
+.options a {
+    color: #4f4b5b;
+    text-decoration: none;   /* tira o sublinhado padrão de links */
+}
+
+.options a:hover {
+    color: #5b3fa6;
+}
+
+/* Botão "Entrar" */
+.btn-signin {
+    margin-top: 10px;
+    border: none;
+    border-radius: 999px;    /* pílula, igual aos campos */
+    padding: 14px 16px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;         /* mãozinha ao passar o mouse */
+    /* Degradê horizontal escuro → claro → escuro, igual à referência */
+    background: linear-gradient(90deg, #5b3fa6 0%, #8a63cc 50%, #5b3fa6 100%);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-signin:hover {
+    transform: translateY(-1px);  /* sobe 1px */
+    box-shadow: 0 10px 20px rgba(91, 63, 166, 0.3);
+}
+
+/* Texto "Novo por aqui? Criar uma conta" */
+.footer-text {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #5d5c6a;
+}
+
+.footer-text a {
+    color: #7a56c4;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-text a:hover {
+    text-decoration: underline;
+}
+
+/* =====================================================
+   6. RESPONSIVO (celular / telas até 760px)
+   ===================================================== */
+
+@media (max-width: 760px) {
+    .login-container {
+        flex-direction: column;  /* painéis passam a ficar um em cima do outro */
+    }
+
+    .left-panel {
+        min-height: 260px;
+        padding: 30px 25px;
+    }
+
+    .right-panel {
+        padding: 35px 25px;
+    }
+
+    .welcome-box h1 {
+        font-size: 1.9rem;
+    }
+
+    .dots {
+        right: 25px;
+    }
+}
