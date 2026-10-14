@@ -1,0 +1,26 @@
+Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+[ERROR] COMPILATION ERROR : 
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[5,50] package org.springframework.security.crypto.bcrypt does not exist
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[6,52] package org.springframework.security.crypto.password does not exist
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[12,12] cannot find symbol
+  symbol:   class PasswordEncoder
+  location: class com.biblioteca.config.PasswordConfig
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[13,20] cannot find symbol
+  symbol:   class BCryptPasswordEncoder
+  location: class com.biblioteca.config.PasswordConfig
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project LibraryVirtual: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[5,50] package org.springframework.security.crypto.bcrypt does not exist
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[6,52] package org.springframework.security.crypto.password does not exist
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[12,12] cannot find symbol
+[ERROR]   symbol:   class PasswordEncoder
+[ERROR]   location: class com.biblioteca.config.PasswordConfig
+[ERROR] /C:/Users/aluno/Documents/GitHub/BTvirtual/src/main/java/com/biblioteca/config/PasswordConfig.java:[13,20] cannot find symbol
+[ERROR]   symbol:   class BCryptPasswordEncoder
+[ERROR]   location: class com.biblioteca.config.PasswordConfig
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

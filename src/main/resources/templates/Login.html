@@ -15,8 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 
-    <!-- Liga este HTML ao arquivo de estilos. Os dois precisam estar na mesma pasta. -->
-    <link rel="stylesheet" href="Style2.css">
+    <!-- Liga este HTML ao arquivo de estilos. O Spring serve os arquivos em /css/*.css a partir da pasta static. -->
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -93,7 +93,7 @@
             <h2>Entrar</h2>
 
 
-            <form class="login-form">
+            <form class="login-form" id="loginForm" method="post" action="/login">
 
 
                 <!-- Campo de usuário/e-mail.
@@ -131,6 +131,7 @@
 
                 
                 <p class="footer-text">Novo por aqui? <a href="#">Criar uma conta</a></p>
+                
             </form>
         </section>
 

@@ -20,7 +20,11 @@ public class Bibliotecario extends Usuario {
     // Construtor vazio (Obrigatorio para o JPA)
 
     public Bibliotecario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor) {
-        super(id, nome, matricula, email, senha, TipoUsuario.BIBLIOTECARIO);
+        this(id, nome, matricula, email, senha, cargo, setor, TipoUsuario.BIBLIOTECARIO);
+    }
+
+    public Bibliotecario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor, TipoUsuario tipoUsuario) {
+        super(id, nome, matricula, email, senha, tipoUsuario != null ? tipoUsuario : TipoUsuario.BIBLIOTECARIO);
         this.cargo = cargo;
         this.setor = setor;
     }
