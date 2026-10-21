@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Acentos (ç, ã, é...) funcionam por causa do UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Faz a página se ajustar à largura do celular (necessário para o @media do CSS funcionar) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Virtual - Aluno</title>
+    <style>
+        body {font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; 
+        align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f4f1fb;}
+        h1 {color: #4b3394;}
+        button {padding: 10px 24px; border:0; border-radius:999px; background: #6a4bc4; color:#fff; cursor: pointer;}
+    </style>
+    </head>
+
+<body>
+    <!-- TELA PROVISÓRIA: troque pela tela real de pesquisa de livros -->
+    <h1>Olá, <span id="nome"></span>!</h1>
+    <p>Login de aluno funcionando. Aquivai ficar a pesquisa de livros.</p>
+    <button onclick="sair()">Sair</button>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario')|| 'null');
+        if (!usuario || usuario.tipo !== 'ALUNO') {
+            window.location.href = '/Login.html';
+        } else {
+            document.getElementById('nome').textContent = usuario.nome;
+        }
+
+        function sair() {
+            sessionStorage.removeItem('usuario');
+            window.location.href = '/Login.html';
+        }
+    </script>
+</body>
+</html>
+
