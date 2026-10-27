@@ -4,6 +4,7 @@
 
 /* O "*" seleciona TODOS os elementos da página. */
 * {
+
     margin: 0;               /* remove as margens que o navegador coloca por padrão */
     padding: 0;              /* remove os espaçamentos internos padrão */
     box-sizing: border-box;  /* width/height passam a incluir padding e borda (fica bem mais fácil calcular tamanhos) */
@@ -12,6 +13,7 @@
 
 /* Fundo da página inteira */
 body {
+    margin: 0;
     min-height: 100vh;       /* no mínimo a altura da tela (100vh = 100% da altura visível) */
     display: flex;           /* flexbox: facilita centralizar o card */
     justify-content: center; /* centraliza na horizontal */
