@@ -1,56 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Acentos (ç, ã, é...) funcionam por causa do UTF-8 -->
     <meta charset="UTF-8">
-    <!-- Faz a página se ajustar à largura do celular (necessário para o @media do CSS funcionar) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrar</title>
 
-
-    <!-- Fonte Montserrat (a mesma da imagem de referência), vinda do Google Fonts.
-         Precisa de internet; sem ela o navegador usa a fonte sans-serif padrão. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 
-    <!-- Liga este HTML ao arquivo de estilos. O Spring serve os arquivos em /css/*.css a partir da pasta static. -->
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
-
-    <!-- CARD PRINCIPAL: guarda os dois painéis lado a lado -->
     <main class="login-container">
 
-
-        <!-- ===================== PAINEL ESQUERDO (roxo) ===================== -->
         <section class="left-panel">
 
-
-            <!-- Fundo decorativo: formas e linhas desenhadas em SVG.
-                 aria-hidden="true" = leitores de tela ignoram, pois é só enfeite. -->
             <svg class="decor-bg" viewBox="0 0 500 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 
-
-                <!-- Formas suaves (manchas) que dão profundidade ao roxo.
-                     Cada uma é semitransparente para se misturar com o gradiente do painel. -->
                 <path d="M250 0 H500 V130 Z" fill="#4b3394" opacity="0.7"/>             <!-- triângulo escuro, canto superior direito -->
                 <ellipse cx="265" cy="340" rx="145" ry="190" fill="#4b3394" opacity="0.35"/> <!-- mancha escura central, atrás do texto -->
                 <ellipse cx="440" cy="480" rx="120" ry="150" fill="#9b78dc" opacity="0.35"/> <!-- mancha clara, canto inferior direito -->
                 <circle cx="0" cy="40" r="130" fill="#4b3394" opacity="0.55"/>            <!-- mancha escura, canto superior esquerdo -->
 
 
-                <!-- Molde das "linhas topográficas": uma forma orgânica desenhada uma vez
-                     e reaproveitada várias vezes em tamanhos diferentes (<use>). -->
                 <defs>
                     <path id="topo" d="M0,-60 C40,-70 80,-30 70,10 C60,50 20,80 -30,60 C-70,45 -80,0 -55,-30 C-40,-48 -20,-55 0,-60 Z"/>
                 </defs>
 
 
-                <!-- Grupo de linhas do canto superior esquerdo.
-                     fill="none" = só o contorno; stroke = cor da linha. -->
                 <g transform="translate(45 70)" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.9">
                     <use href="#topo" transform="scale(1.9)"/>
                     <use href="#topo" transform="scale(1.45)"/>
@@ -59,7 +39,6 @@
                 </g>
 
 
-                <!-- Grupo de linhas do canto inferior direito -->
                 <g transform="translate(450 540)" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.9">
                     <use href="#topo" transform="scale(1.6)"/>
                     <use href="#topo" transform="scale(1.25)"/>
@@ -70,35 +49,24 @@
             </svg>
 
 
-            <!-- Grade de bolinhas (feita só com CSS, veja .dots no style.css) -->
             <div class="dots" aria-hidden="true"></div>
 
-            <!-- Símbolos decorativos pequenos: "+" e círculos vazados -->
             <span class="decor-symbol plus plus-1" aria-hidden="true"></span>
             <span class="decor-symbol plus plus-2" aria-hidden="true"></span>
             <span class="decor-symbol circle circle-1" aria-hidden="true"></span>
             <span class="decor-symbol circle circle-2" aria-hidden="true"></span>
 
-
-            <!-- Texto de boas-vindas -->
             <div class="welcome-box">
                 <h1>Bem-vindo a Biblioteca Virtual!</h1>
                 <p>Você pode entrar para acessar sua conta existente.</p>
             </div>
         </section>
 
-
-        <!-- ===================== PAINEL DIREITO (branco) ===================== -->
         <section class="right-panel">
             <h2>Entrar</h2>
 
-
             <form class="login-form" id="loginForm" method="post" action="/login">
 
-
-                <!-- Campo de usuário/e-mail.
-                     O ícone é um SVG embutido: não depende de internet nem do Font Awesome
-                     (que era o motivo dos quadradinhos vazios na sua tela). -->
                 <label class="input-box">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5Z"/>
@@ -107,7 +75,6 @@
                 </label>
 
 
-                <!-- Campo de senha (type="password" esconde o que é digitado) -->
                 <label class="input-box">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M17 9V7a5 5 0 0 0-10 0v2H5v13h14V9h-2Zm-8-2a3 3 0 0 1 6 0v2H9V7Z"/>
@@ -115,8 +82,6 @@
                     <input type="password" name="senha" placeholder="Senha" autocomplete="current-password" required>
                 </label>
 
-
-                <!-- Linha com "Lembrar-me" à esquerda e "Esqueci a senha" à direita -->
                 <div class="options">
                     <label class="checkbox-container">
                         <input type="checkbox" name="lembrar" checked>
@@ -125,13 +90,9 @@
                     <a href="#">Esqueci a senha</a>
                 </div>
 
-
-                <!-- Botão que envia o formulário -->
                 <button type="submit" class="btn-signin">Entrar</button>
 
-                
-                <p class="footer-text">Novo por aqui? <a href="/src/main/resources/static/Cadastro.html">Criar uma conta</a></p>
-                
+                <p class="footer-text">Novo por aqui? <a href="Cadastro.html">Criar uma conta</a></p>
             </form>
         </section>
 
