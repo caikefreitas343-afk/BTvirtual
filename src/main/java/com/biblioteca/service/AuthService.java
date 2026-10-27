@@ -1,57 +1,34 @@
 package com.biblioteca.service;
 
+import java.util.Optional;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.biblioteca.dto.AlunoDTO;
 import com.biblioteca.dto.CadastroAlunoDTO;
 import com.biblioteca.dto.LoginRequestDTO;
 import com.biblioteca.dto.LoginResponseDTO;
-import com.biblioteca.entity.Aluno;
 import com.biblioteca.entity.Usuario;
-import com.biblioteca.repository.AlunoRepository;
 import com.biblioteca.repository.UsuarioRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
 
-    private final AlunoRepository alunoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final AlunoService alunoService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(AlunoRepository alunoRepository, UsuarioRepository usuarioRepository) {
-        this.alunoRepository = alunoRepository;
+    public AuthService(UsuarioRepository usuarioRepository,
+                       AlunoService alunoService,
+                       PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.alunoService = alunoService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AlunoDTO cadastrarAluno(CadastroAlunoDTO dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("Dados do aluno são obrigatórios.");
-        }
-
-        if (dto.getEmail() == null || dto.getEmail().isBlank()) {
-            throw new IllegalArgumentException("E-mail é obrigatório.");
-        }
-
-        if (dto.getSenha() == null || dto.getSenha().isBlank()) {
-            throw new IllegalArgumentException("Senha é obrigatória.");
-        }
-
-        if (alunoRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("E-mail já cadastrado.");
-        }
-
-        Aluno aluno = new Aluno(
-                null,
-                dto.getNome(),
-                dto.getMatricula(),
-                dto.getEmail(),
-                dto.getSenha(),
-                dto.getTurma(),
-                dto.getSerie()
-        );
-
-        Aluno salvo = alunoRepository.save(aluno);
-        return new AlunoDTO(salvo);
+        return alunoService.criar(dto);
     }
 
     public LoginResponseDTO login(LoginRequestDTO dto) {
@@ -64,15 +41,13 @@ public class AuthService {
         }
 
         String identificador = dto.getIdentificador();
-        String senha = dto.getSenha();
-
         Optional<Usuario> usuarioPorEmail = usuarioRepository.findByEmail(identificador);
         Optional<Usuario> usuarioPorMatricula = usuarioRepository.findByMatricula(identificador);
 
         Usuario usuario = usuarioPorEmail.or(() -> usuarioPorMatricula)
                 .orElseThrow(() -> new IllegalArgumentException("Credenciais inválidas."));
 
-        if (!usuario.getSenha().equals(senha)) {
+        if (usuario.getSenha() == null || !passwordEncoder.matches(dto.getSenha(), usuario.getSenha())) {
             throw new IllegalArgumentException("Credenciais inválidas.");
         }
 
