@@ -1,23 +1,27 @@
 package com.biblioteca.dto;
 
+import java.util.UUID;
+
 import com.biblioteca.entity.Aluno;
 
 public record AlunoDTO(
+        UUID id,
         String nome,
         String matricula,
-        String email
+        String email,
+        String turma,
+        String serie,
+        boolean bloqueado
 ) {
-    public AlunoDTO(String nome, String matricula, String email) {
-        this.nome = nome;
-        this.matricula = matricula;
-        this.email = email;
-    }
-
     public AlunoDTO(Aluno aluno) {
         this(
+                aluno.getId(),
                 aluno.getNome(),
                 aluno.getMatricula(),
-                aluno.getEmail()
+                aluno.getEmail(),
+                aluno.getTurma(),
+                aluno.getSerie(),
+                aluno.isBloqueado()
         );
     }
 }

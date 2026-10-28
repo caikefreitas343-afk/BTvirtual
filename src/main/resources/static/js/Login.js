@@ -22,11 +22,11 @@ if (formLogin) {
         mostrarMensagem('');
 
         try {
-            const resposta = await fetch('/auth/login', {
+            const resposta = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    usuario: formLogin.elements.namedItem('usuario').value,
+                    login: formLogin.elements.namedItem('login').value,
                     senha: formLogin.elements.namedItem('senha').value
                 })
             });
@@ -39,8 +39,22 @@ if (formLogin) {
             const usuario = await resposta.json();
             sessionStorage.setItem('usuario', JSON.stringify(usuario));
 
-            window.location.href =
-                usuario.tipoUsuario === 'BIBLIOTECARIO' ? '/bibliotecario.html' : '/aluno.html';
+            // Segunda tela (ajustar os nomes quando criar as telas)
+            const destinos = {
+                'BIBLIOTECARIO': '/bibliotecario.html',
+                'ALUNO': '/aluno.html'
+            };
+            const destino = destinos[usuario.tipoUsuario]
+
+            // PROFESSOR e GESTAO ainda não possuem telas proprias
+
+            if (!destino) {
+                sessionStorage.removeItem('usuario');
+                mostrarMensagem('Tipo de usuário não tem tela disponivel.');
+                return;
+            }
+
+            window.location.href = destinos[usuario.tipoUsuario] || '/aluno.html';
         } catch (erro) {
             mostrarMensagem('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
         }
@@ -52,6 +66,11 @@ if (cadastroForm) {
     cadastroForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         mostrarMensagem('');
+
+        if (document.getElementById('senha').value.length < 6) {
+            mostrarMensagem('A senha deve ter no mínimo 6 caracteres.');
+            return;
+        }
 
         try {
             const resposta = await fetch('/auth/cadastro', {
