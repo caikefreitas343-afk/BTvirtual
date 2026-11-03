@@ -1,6 +1,6 @@
 package com.biblioteca.dto;
 
-    import com.biblioteca.entity.Bibliotecario;
+    import com.biblioteca.entity.Funcionario;
 
     public record BibliotecarioDTO(
             String nome,
@@ -17,7 +17,7 @@ package com.biblioteca.dto;
             this.setor = setor;
         }
 
-        public BibliotecarioDTO(Bibliotecario bibliotecario) {
+        public BibliotecarioDTO(Funcionario bibliotecario) {
             this(
                     bibliotecario.getNome(),
                     bibliotecario.getMatricula(),

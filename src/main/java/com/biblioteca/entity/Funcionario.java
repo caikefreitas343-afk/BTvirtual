@@ -7,23 +7,23 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_bibliotecario")
-public class Bibliotecario extends Usuario {
+public class Funcionario extends Usuario {
     
 	private String cargo;
     private String setor;
 
-    protected Bibliotecario() {
+    protected Funcionario() {
         super();
         this.tipoUsuario = TipoUsuario.BIBLIOTECARIO;
     }
 
     // Construtor vazio (Obrigatorio para o JPA)
 
-    public Bibliotecario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor) {
+    public Funcionario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor) {
         this(id, nome, matricula, email, senha, cargo, setor, TipoUsuario.BIBLIOTECARIO);
     }
 
-    public Bibliotecario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor, TipoUsuario tipoUsuario) {
+    public Funcionario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor, TipoUsuario tipoUsuario) {
         super(id, nome, matricula, email, senha, tipoUsuario != null ? tipoUsuario : TipoUsuario.BIBLIOTECARIO);
         this.cargo = cargo;
         this.setor = setor;
