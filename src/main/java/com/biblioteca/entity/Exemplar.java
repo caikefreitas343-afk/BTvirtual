@@ -3,8 +3,8 @@ package com.biblioteca.entity;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class Exemplar {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusExemplar status; = StatusExemplar.DISPONIVEL;
+    private StatusExemplar status = StatusExemplar.DISPONIVEL;
 
     @Column(length = 100)
     private String localizacao;

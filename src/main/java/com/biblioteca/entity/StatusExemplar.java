@@ -1,5 +1,8 @@
 package com.biblioteca.entity;
 
-public class StatusExemplar {
-    
+public enum  StatusExemplar {
+    DISPONIVEL,
+    EMPRESTADO,
+    PERDIDO,
+    DANIFICADO
 }

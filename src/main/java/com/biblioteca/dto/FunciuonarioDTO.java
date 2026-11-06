@@ -2,14 +2,14 @@ package com.biblioteca.dto;
 
     import com.biblioteca.entity.Funcionario;
 
-    public record BibliotecarioDTO(
+    public record FunciuonarioDTO(
             String nome,
             String matricula,
             String email,
             String cargo,
             String setor
     ) {
-        public BibliotecarioDTO(String nome, String matricula, String email, String cargo, String setor) {
+        public FunciuonarioDTO(String nome, String matricula, String email, String cargo, String setor) {
             this.nome = nome;
             this.matricula = matricula;
             this.email = email;
@@ -17,13 +17,13 @@ package com.biblioteca.dto;
             this.setor = setor;
         }
 
-        public BibliotecarioDTO(Funcionario bibliotecario) {
+        public FunciuonarioDTO(Funcionario funcionario) {
             this(
-                    bibliotecario.getNome(),
-                    bibliotecario.getMatricula(),
-                    bibliotecario.getEmail(),
-                    bibliotecario.getCargo(),
-                    bibliotecario.getSetor()
+                    funcionario.getNome(),
+                    funcionario.getMatricula(),
+                    funcionario.getEmail(),
+                    funcionario.getCargo(),
+                    funcionario.getSetor()
             );
         }
     }
