@@ -18,7 +18,7 @@ body{
     padding: 0px;
     gap: 24px;
     position: relative;
-    background: #0A172B;
+    background-image: linear-gradient(#0A172B, rgb(23, 42, 70));
 }
 
 .container{
@@ -35,12 +35,12 @@ body{
 }
 
 .container p.cadastro{
-    margin-top: 0;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
     color: rgba(33, 35, 62, 0.774);
-    font-size: 16px;
-    padding: 5px
+    font-size: 24px;
+    padding: 5px;
 }
 
 input{
@@ -61,6 +61,21 @@ input{
     outline: none;
 }
 
+.panel input:focus{
+    border-color: #17408C;
+}
+.panel input[type="email"],
+.panel input[type="password"] {
+    width: 100%;
+    height: 42px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    background: #FAFBFC;
+    border: 1px solid #DDE2E8;
+    border-radius: 6px;
+    outline: none;
+}
+
 button{
     margin-top: 50px;
     align-items: center;
@@ -78,8 +93,6 @@ button{
     align-self: stretch;
     flex-grow: 0;
     border: none;
-
-    
 }
 
 .panel{
