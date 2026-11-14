@@ -1,91 +1,70 @@
 package com.biblioteca.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "tb_emprestimos")
+@Table(name = "emprestimo")
 public class Emprestimo {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @JdbcTypeCode(SqlTypes.BINARY)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_emprestimo")
+    private Integer id;
 
-    // Esse LAZY evita consultas gigantes desnecessárias no banco
+    // O empréstimo é de uma CÓPIA FÍSICA (exemplar), não do título
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_exemplar", nullable = false)
+    private Exemplar exemplar;
+
+    // Funcionário que registrou o empréstimo
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_funcionario", nullable = false)
+    private Funcionario funcionario;
+
+    // Quem pegou: um aluno OU um professor (o outro fica nulo)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "id_aluno")
+    private Aluno aluno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "livro_id", nullable = false)
-    private Livro livro;
+    @JoinColumn(name = "id_professor")
+    private Professor professor;
 
-    @Column(nullable = false)
-    private LocalDateTime dataEmprestimo;
+    @Column(name = "data_emprestimo", nullable = false)
+    private LocalDate dataEmprestimo;
 
-    @Column(nullable = false)
-    private LocalDateTime dataDevolucaoPrevista;
+    @Column(name = "data_prevista_devolucao", nullable = false)
+    private LocalDate dataPrevistaDevolucao;
 
-    // Pode ser nulo, porque quando o empréstimo é criado, ainda não foi devolvido
-    private LocalDateTime dataDevolucaoEfetiva;
-
-    @Column(nullable = false)
-    private Integer quantidadeRenovacoes = 0;
-
-    // Utulizamos BigDecimal (Boa prática para dinheiro) Por exemplo, caso o Aluno perca um livro.
-    @Enumerated (EnumType.STRING)
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_devolucao", nullable = false, length = 20)
     private StatusEmprestimo status;
 
-    private Double valorMulta = 0.0;
-
-    // Construtor vazio que é: (Obrigatorio para o JPA)
     public Emprestimo() {}
 
-    // O Construtor completo
-    public Emprestimo(UUID id, Usuario usuario, Livro livro, LocalDateTime dataEmprestimo, LocalDateTime dataDevolucaoPrevista, LocalDateTime dataDevolucaoEfetiva, Integer quantidadeRenovacoes, StatusEmprestimo status, Double valorMulta) {
-        this.id = id;
-        this.usuario = usuario;
-        this.livro = livro;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
-        this.dataDevolucaoEfetiva = dataDevolucaoEfetiva;
-        this.quantidadeRenovacoes = quantidadeRenovacoes;
-        this.status = status;
-        this.valorMulta = valorMulta;
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    }
+    public Exemplar getExemplar() { return exemplar; }
+    public void setExemplar(Exemplar exemplar) { this.exemplar = exemplar; }
 
-    // Getters e Setters Para todos os atributos da classe Emprestimo
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+    public Funcionario getFuncionario() { return funcionario; }
+    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }
 
-    public Usuario getUsuario() { return usuario; }
-    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public Aluno getAluno() { return aluno; }
+    public void setAluno(Aluno aluno) { this.aluno = aluno; }
 
-    public Livro getLivro() { return livro; }
-    public void setLivro(Livro livro) { this.livro = livro; }
+    public Professor getProfessor() { return professor; }
+    public void setProfessor(Professor professor) { this.professor = professor; }
 
-    public LocalDateTime getDataEmprestimo() { return dataEmprestimo; }
-    public void setDataEmprestimo(LocalDateTime dataEmprestimo) { this.dataEmprestimo = dataEmprestimo; }
+    public LocalDate getDataEmprestimo() { return dataEmprestimo; }
+    public void setDataEmprestimo(LocalDate dataEmprestimo) { this.dataEmprestimo = dataEmprestimo; }
 
-    public LocalDateTime getDataDevolucaoPrevista() { return dataDevolucaoPrevista; }
-    public void setDataDevolucaoPrevista(LocalDateTime dataDevolucaoPrevista) { this.dataDevolucaoPrevista = dataDevolucaoPrevista; }
-
-    public LocalDateTime getDataDevolucaoEfetiva() { return dataDevolucaoEfetiva; }
-    public void setDataDevolucaoEfetiva(LocalDateTime dataDevolucaoEfetiva) { this.dataDevolucaoEfetiva = dataDevolucaoEfetiva; }
-
-    public Integer getQuantidadeRenovacoes() { return quantidadeRenovacoes; }
-    public void setQuantidadeRenovacoes(Integer quantidadeRenovacoes) { this.quantidadeRenovacoes = quantidadeRenovacoes; }
+    public LocalDate getDataPrevistaDevolucao() { return dataPrevistaDevolucao; }
+    public void setDataPrevistaDevolucao(LocalDate dataPrevistaDevolucao) { this.dataPrevistaDevolucao = dataPrevistaDevolucao; }
 
     public StatusEmprestimo getStatus() { return status; }
     public void setStatus(StatusEmprestimo status) { this.status = status; }
-
-    public Double getValorMulta() { return valorMulta; }
-    public void setValorMulta(Double valorMulta) { this.valorMulta = valorMulta; }
 }

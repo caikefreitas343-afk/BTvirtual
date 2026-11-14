@@ -1,127 +1,131 @@
 package com.biblioteca.service;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.biblioteca.dto.AlunoDTO;
 import com.biblioteca.dto.AtualizarAlunoDTO;
 import com.biblioteca.dto.CadastroAlunoDTO;
 import com.biblioteca.entity.Aluno;
+import com.biblioteca.entity.StatusMulta;
+import com.biblioteca.entity.Turma;
 import com.biblioteca.repository.AlunoRepository;
-import com.biblioteca.repository.UsuarioRepository;
+import com.biblioteca.repository.MultaRepository;
+import com.biblioteca.repository.TurmaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
+@Transactional
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final TurmaRepository turmaRepository;
+    private final MultaRepository multaRepository;
     private final PasswordEncoder passwordEncoder;
 
     public AlunoService(AlunoRepository alunoRepository,
-                        UsuarioRepository usuarioRepository,
+                        TurmaRepository turmaRepository,
+                        MultaRepository multaRepository,
                         PasswordEncoder passwordEncoder) {
         this.alunoRepository = alunoRepository;
-        this.usuarioRepository = usuarioRepository;
+        this.turmaRepository = turmaRepository;
+        this.multaRepository = multaRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     // CREATE
     public AlunoDTO criar(CadastroAlunoDTO dto) {
-        if (dto == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados do aluno são obrigatórios");
-        }
-        validarDados(dto.getNome(), dto.getMatricula(), dto.getEmail());
-        validarSenha(dto.getSenha());
-        if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já cadastrado");
-        }
-        if (usuarioRepository.findByMatricula(dto.getMatricula()).isPresent()) {
+        validarSenha(dto.senha());
+        if (alunoRepository.existsByMatricula(dto.matricula())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Matrícula já cadastrada");
         }
+        if (alunoRepository.existsByEmail(dto.email())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já cadastrado");
+        }
 
-        Aluno aluno = new Aluno(
-                null,
-                dto.getNome(),
-                dto.getMatricula(),
-                dto.getEmail(),
-                passwordEncoder.encode(dto.getSenha()),
-                dto.getTurma(),
-                dto.getSerie()
-        );
-        return new AlunoDTO(alunoRepository.save(aluno));
+        Aluno aluno = new Aluno();
+        aluno.setPrenome(dto.prenome());
+        aluno.setSobrenome(dto.sobrenome());
+        aluno.setMatricula(dto.matricula());
+        aluno.setEmail(dto.email());
+        aluno.setSenha(passwordEncoder.encode(dto.senha())); // salva só o hash
+        aluno.setTurma(buscarTurma(dto.idTurma()));
+
+        return paraDTO(alunoRepository.save(aluno));
     }
 
     // READ
     public List<AlunoDTO> listarTodos() {
-        return alunoRepository.findAll().stream().map(AlunoDTO::new).toList();
+        return alunoRepository.findAll().stream().map(this::paraDTO).toList();
     }
 
-    public AlunoDTO buscarPorId(UUID id) {
-        return new AlunoDTO(buscarEntidade(id));
+    public AlunoDTO buscarPorId(Integer id) {
+        return paraDTO(buscarEntidade(id));
     }
 
     public AlunoDTO buscarPorMatricula(String matricula) {
         Aluno aluno = alunoRepository.findByMatricula(matricula)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Aluno não encontrado com a matrícula: " + matricula));
-        return new AlunoDTO(aluno);
+        return paraDTO(aluno);
     }
 
     // UPDATE
-    public AlunoDTO atualizar(UUID id, AtualizarAlunoDTO dto) {
-        if (dto == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados do aluno são obrigatórios");
-        }
-        validarDados(dto.nome(), dto.matricula(), dto.email());
+    public AlunoDTO atualizar(Integer id, AtualizarAlunoDTO dto) {
         Aluno aluno = buscarEntidade(id);
 
-        if (!aluno.getEmail().equals(dto.email())
-                && usuarioRepository.findByEmail(dto.email()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já cadastrado");
-        }
-        if (!aluno.getMatricula().equals(dto.matricula())
-                && usuarioRepository.findByMatricula(dto.matricula()).isPresent()) {
+        if (!aluno.getMatricula().equals(dto.matricula()) && alunoRepository.existsByMatricula(dto.matricula())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Matrícula já cadastrada");
         }
+        if (dto.email() != null && !dto.email().equals(aluno.getEmail()) && alunoRepository.existsByEmail(dto.email())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "E-mail já cadastrado");
+        }
 
-        aluno.setNome(dto.nome());
-        aluno.setEmail(dto.email());
+        aluno.setPrenome(dto.prenome());
+        aluno.setSobrenome(dto.sobrenome());
         aluno.setMatricula(dto.matricula());
-        aluno.setTurma(dto.turma());
-        aluno.setSerie(dto.serie());
+        aluno.setEmail(dto.email());
+        aluno.setTurma(buscarTurma(dto.idTurma()));
 
-        return new AlunoDTO(alunoRepository.save(aluno));
+        if (dto.novaSenha() != null && !dto.novaSenha().isBlank()) {
+            validarSenha(dto.novaSenha());
+            aluno.setSenha(passwordEncoder.encode(dto.novaSenha()));
+        }
+        return paraDTO(alunoRepository.save(aluno));
     }
 
     // DELETE
-    public void deletar(UUID id) {
+    public void deletar(Integer id) {
         alunoRepository.delete(buscarEntidade(id));
     }
 
-    private Aluno buscarEntidade(UUID id) {
+    private Aluno buscarEntidade(Integer id) {
         return alunoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Aluno não encontrado com o ID: " + id));
+    }
+
+    private Turma buscarTurma(Integer idTurma) {
+        if (idTurma == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Escolha a turma do aluno");
+        }
+        return turmaRepository.findById(idTurma)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Turma não encontrada"));
+    }
+
+    // O aluno fica bloqueado enquanto tiver multa pendente (não existe coluna "bloqueado" no banco)
+    private AlunoDTO paraDTO(Aluno aluno) {
+        boolean bloqueado = multaRepository.existsByAlunoIdAndStatus(aluno.getId(), StatusMulta.PENDENTE);
+        return AlunoDTO.from(aluno, bloqueado);
     }
 
     private void validarSenha(String senha) {
         if (senha == null || senha.length() < 6) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "A senha precisa ter pelo menos 6 caracteres");
-        }
-    }
-
-    private void validarDados(String nome, String matricula, String email) {
-        if (nome == null || nome.isBlank()
-                || matricula == null || matricula.isBlank()
-                || email == null || email.isBlank()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Nome, matrícula e e-mail são obrigatórios");
         }
     }
 }

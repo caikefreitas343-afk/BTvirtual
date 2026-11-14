@@ -1,14 +1,12 @@
 package com.biblioteca.dto;
 
-import java.util.UUID;
-
+// novaSenha é opcional: se vier vazia ou nula, a senha atual é mantida
 public record AtualizarAlunoDTO(
-        UUID id,
-        String nome,
+        String prenome,
+        String sobrenome,
         String matricula,
         String email,
-        String turma,
-        String serie,
+        Integer idTurma,
         String novaSenha
 ) {
 }

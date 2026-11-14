@@ -1,69 +1,53 @@
 package com.biblioteca.entity;
 
-import java.util.UUID;
+import jakarta.persistence.*;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.type.SqlTypes;
+import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
+// Um Exemplar é UMA CÓPIA FÍSICA de um Livro (o título).
 @Entity
 @Table(name = "exemplar")
 public class Exemplar {
+
     @Id
-    @UuidGenerator
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @JdbcTypeCode(SqlTypes.BINARY)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_exemplar")
+    private Integer id;
 
-    @Column(nullable = false, unique = true, length = 30)
-    private String codigo;
-
-    @ManyToOne (fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "livro_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_livro", nullable = false)
     private Livro livro;
 
-    @Enumerated(EnumType.STRING)
+    // Código da etiqueta colada no livro físico
+    @Column(name = "numero_tombo", nullable = false, unique = true, length = 30)
+    private String numeroTombo;
+
+    @Column(name = "estado_conservacao", nullable = false, length = 20)
+    private String estadoConservacao;
+
+    @Column(name = "data_aquisicao", nullable = false)
+    private LocalDate dataAquisicao;
+
     @Column(nullable = false)
-    private StatusExemplar status = StatusExemplar.DISPONIVEL;
+    private boolean disponivel = true;
 
-    @Column(length = 100)
-    private String localizacao;
-
-    // Construtor vazio (Obrigatorio para o JPA)
     public Exemplar() {}
 
-    public Exemplar(String codigo, Livro livro, String localizacao) {
-        this.codigo = codigo;
-        this.livro = livro;
-        this.localizacao = localizacao;
-        this.status = StatusExemplar.DISPONIVEL; // Exemplar novo é sempre criado como DISPONIVEL
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    // Getters e Setters
-    public UUID getId() {return id;}
-    public void setId(UUID id) {this.id = id;}
+    public Livro getLivro() { return livro; }
+    public void setLivro(Livro livro) { this.livro = livro; }
 
-    public String getCodigo() {return codigo;}
-    public void setCodigo(String codigo) {this.codigo = codigo;}
+    public String getNumeroTombo() { return numeroTombo; }
+    public void setNumeroTombo(String numeroTombo) { this.numeroTombo = numeroTombo; }
 
-    public Livro getLivro() {return livro;}
-    public void setLivro(Livro livro) {this.livro = livro;}
+    public String getEstadoConservacao() { return estadoConservacao; }
+    public void setEstadoConservacao(String estadoConservacao) { this.estadoConservacao = estadoConservacao; }
 
-    public StatusExemplar getStatus() {return status;}
-    public void setStatus(StatusExemplar status) {this.status = status;}
+    public LocalDate getDataAquisicao() { return dataAquisicao; }
+    public void setDataAquisicao(LocalDate dataAquisicao) { this.dataAquisicao = dataAquisicao; }
 
-    public String getLocalizacao() {return localizacao;}
-    public void setLocalizacao(String localizacao) {this.localizacao = localizacao;}
+    public boolean isDisponivel() { return disponivel; }
+    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
 }

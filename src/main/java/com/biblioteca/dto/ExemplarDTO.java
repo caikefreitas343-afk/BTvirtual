@@ -1,25 +1,27 @@
 package com.biblioteca.dto;
 
-import java.util.UUID;
-
 import com.biblioteca.entity.Exemplar;
-import com.biblioteca.entity.StatusExemplar;
 
-// Resposta da API
+import java.time.LocalDate;
+
 public record ExemplarDTO(
-    UUID id,
-    String codigo,
-    String tituloLivro,
-    StatusExemplar status,
-    String localizacao
+        Integer id,
+        String numeroTombo,
+        Integer idLivro,
+        String tituloLivro,
+        String estadoConservacao,
+        LocalDate dataAquisicao,
+        boolean disponivel
 ) {
-    public ExemplarDTO(Exemplar exemplar) {
-        this(
-            exemplar.getId(),
-            exemplar.getCodigo(),
-            exemplar.getLivro().getTitulo(),
-            exemplar.getStatus(),
-            exemplar.getLocalizacao()
+    public static ExemplarDTO from(Exemplar e) {
+        return new ExemplarDTO(
+                e.getId(),
+                e.getNumeroTombo(),
+                e.getLivro().getId(),
+                e.getLivro().getTitulo(),
+                e.getEstadoConservacao(),
+                e.getDataAquisicao(),
+                e.isDisponivel()
         );
     }
 }
