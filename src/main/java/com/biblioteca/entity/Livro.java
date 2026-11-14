@@ -1,93 +1,67 @@
 package com.biblioteca.entity;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import java.util.HashSet;
+import java.util.Set;
 
+// Um Livro é o TÍTULO (a obra). As cópias físicas são os Exemplares.
 @Entity
-@Table(name = "tb_livro")
+@Table(name = "livro")
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JdbcTypeCode(SqlTypes.BINARY)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_livro")
+    private Integer id;
 
-    @Column(nullable = false, length = 150)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_editora", nullable = false)
+    private Editora editora;
+
+    @Column(nullable = false, length = 250)
     private String titulo;
 
-    @Column(nullable = false, length = 100)
-    private String autor;
+    @Column(length = 30)
+    private String edicao;
 
-    @Column(nullable = true, unique = true, length = 20)
-    private String isbn;
+    @Column(name = "ano_publicacao")
+    private Short anoPublicacao;
 
-    @Column (nullable = false)
-    private Integer anoPublicacao;
+    // Tabela de ligação livro_autor
+    @ManyToMany
+    @JoinTable(name = "livro_autor",
+            joinColumns = @JoinColumn(name = "id_livro"),
+            inverseJoinColumns = @JoinColumn(name = "id_autor"))
+    private Set<Autor> autores = new HashSet<>();
 
-    @Column (nullable = false, length = 50)
-    private String genero;
-
-    @Column (nullable = false)
-    private Integer quantidadeEstoque;
-
-    @Column (nullable = false)
-    private Integer quantidadeDisponivel;
-
-    @Column (nullable = false, length = 50)
-    private String codigoBarras;
-
-    @Enumerated (EnumType.STRING)
-    private StatusLivro status = StatusLivro.DISPONIVEL;
+    // Tabela de ligação livro_categoria
+    @ManyToMany
+    @JoinTable(name = "livro_categoria",
+            joinColumns = @JoinColumn(name = "id_livro"),
+            inverseJoinColumns = @JoinColumn(name = "id_categoria"))
+    private Set<Categoria> categorias = new HashSet<>();
 
     public Livro() {}
 
-    public Livro(String titulo, String autor, String isbn, int anoPublicacao, String genero, Integer quantidadeEstoque, Integer quantidadeDisponivel, String codigoBarras, UUID id) {
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.isbn = isbn;
-        this.anoPublicacao = anoPublicacao;
-        this.genero = genero;
-        this.quantidadeEstoque = quantidadeEstoque;
-        this.quantidadeDisponivel = quantidadeDisponivel;
-        this.codigoBarras = codigoBarras;
-        this.status = StatusLivro.DISPONIVEL;
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    }
+    public Editora getEditora() { return editora; }
+    public void setEditora(Editora editora) { this.editora = editora; }
 
-        public UUID getId() {return id;}
-        public void setId(UUID id) {this.id = id;}
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-        public String getTitulo() {return titulo;}
-        public void setTitulo(String titulo) {this.titulo = titulo;}
+    public String getEdicao() { return edicao; }
+    public void setEdicao(String edicao) { this.edicao = edicao; }
 
-        public String getAutor() {return autor;}
-        public void setAutor(String autor) {this.autor = autor;}
+    public Short getAnoPublicacao() { return anoPublicacao; }
+    public void setAnoPublicacao(Short anoPublicacao) { this.anoPublicacao = anoPublicacao; }
 
-        public String getIsbn() {return isbn;}
-        public void setIsbn(String isbn) {this.isbn = isbn;}
+    public Set<Autor> getAutores() { return autores; }
+    public void setAutores(Set<Autor> autores) { this.autores = autores; }
 
-        public int getAnoPublicacao() {return anoPublicacao;}
-        public void setAnoPublicacao(int anoPublicacao) {this.anoPublicacao = anoPublicacao;}
-
-        public String getGenero() {return genero;}
-        public void setGenero(String genero) {this.genero = genero;}
-
-        public Integer getQuantidadeEstoque() {return quantidadeEstoque;}
-        public void setQuantidadeEstoque(Integer quantidadeEstoque) {this.quantidadeEstoque = quantidadeEstoque;}
-
-        public Integer getQuantidadeDisponivel() {return quantidadeDisponivel;}
-        public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {this.quantidadeDisponivel = quantidadeDisponivel;}
-
-        public String getCodigoBarras() {return codigoBarras;}
-        public void setCodigoBarras(String codigoBarras) {this.codigoBarras = codigoBarras;}
-
-        public StatusLivro getStatus() {return status;}
-        public void setStatus(StatusLivro status) {this.status = status;}
-    
-
-
+    public Set<Categoria> getCategorias() { return categorias; }
+    public void setCategorias(Set<Categoria> categorias) { this.categorias = categorias; }
 }

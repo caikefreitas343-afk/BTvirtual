@@ -5,5 +5,4 @@ public enum StatusEmprestimo {
     ATRASADO,
     DEVOLVIDO,
     CANCELADO
-    
 }

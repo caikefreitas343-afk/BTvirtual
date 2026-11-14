@@ -1,18 +1,20 @@
 package com.biblioteca.config;
 
+import com.biblioteca.entity.Funcionario;
+import com.biblioteca.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.biblioteca.entity.TipoUsuario;
-import com.biblioteca.entity.Usuario;
-import com.biblioteca.repository.UsuarioRepository;
+import java.time.LocalDate;
 
+// Cria o primeiro bibliotecário ao iniciar o projeto, se ele ainda não existir.
+// Os dados vêm do application.properties (chaves biblioteca.bibliotecario.*).
 @Component
 public class Bibliotecarioinicial implements CommandLineRunner {
 
-    private final UsuarioRepository usuarioRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${biblioteca.bibliotecario.nome:Bibliotecário}")
@@ -27,29 +29,27 @@ public class Bibliotecarioinicial implements CommandLineRunner {
     @Value("${biblioteca.bibliotecario.senha:}")
     private String senha;
 
-    public Bibliotecarioinicial(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
+    public Bibliotecarioinicial(FuncionarioRepository funcionarioRepository, PasswordEncoder passwordEncoder) {
+        this.funcionarioRepository = funcionarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (email.isBlank() || matricula.isBlank() || senha.isBlank()) {
-            return; // NÃO configurado, não cria nada
+            return; // não configurado: não cria nada
         }
-        if (usuarioRepository.findByEmail(email)!= null 
-        || usuarioRepository.findByMatricula(matricula)!= null) {
-            return;
+        if (funcionarioRepository.existsByEmail(email) || funcionarioRepository.existsByMatriculaFuncional(matricula)) {
+            return; // já existe
         }
 
-        Usuario bibliotecario = new Usuario(
-                null,
-                nome,
-                matricula,
-                email,
-                passwordEncoder.encode(senha),
-                TipoUsuario.BIBLIOTECARIO
-        );
-        usuarioRepository.save(bibliotecario);
+        Funcionario bibliotecario = new Funcionario();
+        bibliotecario.setNome(nome);
+        bibliotecario.setEmail(email);
+        bibliotecario.setMatriculaFuncional(matricula);
+        bibliotecario.setCargo("Bibliotecário");
+        bibliotecario.setDataAdmissao(LocalDate.now());
+        bibliotecario.setSenha(passwordEncoder.encode(senha));
+        funcionarioRepository.save(bibliotecario);
     }
 }

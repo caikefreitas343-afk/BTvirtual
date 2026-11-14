@@ -1,49 +1,58 @@
 package com.biblioteca.entity;
 
-import java.util.UUID;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
 
+// Funcionário da escola. Aqui ele faz o papel de bibliotecário.
 @Entity
-@Table(name = "tb_bibliotecario")
-public class Funcionario extends Usuario {
-    
-	private String cargo;
-    private String setor;
+@Table(name = "funcionario")
+public class Funcionario {
 
-    protected Funcionario() {
-        super();
-        this.tipoUsuario = TipoUsuario.BIBLIOTECARIO;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_funcionario")
+    private Integer id;
 
-    // Construtor vazio (Obrigatorio para o JPA)
+    @Column(nullable = false, length = 120)
+    private String nome;
 
-    public Funcionario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor) {
-        this(id, nome, matricula, email, senha, cargo, setor, TipoUsuario.BIBLIOTECARIO);
-    }
+    @Column(nullable = false, length = 160)
+    private String email;
 
-    public Funcionario(UUID id, String nome, String matricula, String email, String senha, String cargo, String setor, TipoUsuario tipoUsuario) {
-        super(id, nome, matricula, email, senha, tipoUsuario != null ? tipoUsuario : TipoUsuario.BIBLIOTECARIO);
-        this.cargo = cargo;
-        this.setor = setor;
-    }
+    @Column(name = "data_admissao", nullable = false)
+    private LocalDate dataAdmissao;
 
-    // Getters e Setters
-    public String getCargo() {
-        return cargo;
-    }
+    @Column(nullable = false, length = 60)
+    private String cargo;
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
+    @Column(name = "matricula_funcional", nullable = false, unique = true, length = 30)
+    private String matriculaFuncional;
 
-    public String getSetor() {
-        return setor;
-    }
+    // Coluna acrescentada ao banco para o login (veja alteracoes_banco.sql)
+    @Column(length = 100)
+    private String senha;
 
-    public void setSetor(String setor) {
-        this.setor = setor;
-    }
+    public Funcionario() {}
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public LocalDate getDataAdmissao() { return dataAdmissao; }
+    public void setDataAdmissao(LocalDate dataAdmissao) { this.dataAdmissao = dataAdmissao; }
+
+    public String getCargo() { return cargo; }
+    public void setCargo(String cargo) { this.cargo = cargo; }
+
+    public String getMatriculaFuncional() { return matriculaFuncional; }
+    public void setMatriculaFuncional(String matriculaFuncional) { this.matriculaFuncional = matriculaFuncional; }
+
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 }
-

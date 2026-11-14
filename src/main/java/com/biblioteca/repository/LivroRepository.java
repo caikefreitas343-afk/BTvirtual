@@ -1,27 +1,20 @@
 package com.biblioteca.repository;
 
 import com.biblioteca.entity.Livro;
-import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-public interface LivroRepository extends JpaRepository<Livro, UUID> {
+public interface LivroRepository extends JpaRepository<Livro, Integer> {
 
-    Optional<Livro> findByisbn(String isbn);
-
-    Optional<Livro> findByCodigoBarras(String codigoBarras);
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select l from Livro l where l.id = :id")
-    Optional<Livro> findByIdForUpdate(@Param("id") UUID id);
-    
     List<Livro> findByTituloContainingIgnoreCase(String titulo);
 
-    List<Livro> findByAutorContainingIgnoreCase(String autor);
+    // Procura pelo nome (ou nome artístico) do autor
+    @Query("select distinct l from Livro l join l.autores a "
+            + "where lower(a.prenomeAutor) like lower(concat('%', :termo, '%')) "
+            + "or lower(a.sobrenomeAutor) like lower(concat('%', :termo, '%')) "
+            + "or lower(a.nomeArtistico) like lower(concat('%', :termo, '%'))")
+    List<Livro> buscarPorAutor(@Param("termo") String termo);
 }

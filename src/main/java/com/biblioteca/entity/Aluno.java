@@ -1,42 +1,58 @@
 package com.biblioteca.entity;
 
-import java.util.UUID;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_aluno")
-public class Aluno extends Usuario {
+@Table(name = "aluno")
+public class Aluno {
 
-    private String turma;
-    private String serie;
-    private boolean bloqueado = false; //Controla impedimento por multas e atrasos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_aluno")
+    private Integer id;
 
-    //Contrutor Vazio (Exigido pelo JPA)
-    public Aluno() {
-        super();
-        this.tipoUsuario = TipoUsuario.ALUNO;
-    }
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_turma", nullable = false)
+    private Turma turma;
 
-    // Construtor completo
-    public Aluno(UUID id, String nome, String matricula, String email, String senha, String turma, String serie) {
-        super(id, nome, matricula, email, senha, TipoUsuario.ALUNO);
-        this.turma = turma;
-        this.serie = serie;
-        this.bloqueado = false; //Aluno novo começa liberado
-    }
+    @Column(nullable = false, unique = true, length = 30)
+    private String matricula;
 
-    // Getters e Setters
-    public String getTurma() { return turma;}
-    public void setTurma(String turma) { this.turma = turma; }
+    @Column(nullable = false, length = 80)
+    private String prenome;
 
-    public String getSerie() { return serie;}
-    public void setSerie(String serie) { this.serie = serie;}
+    @Column(nullable = false, length = 80)
+    private String sobrenome;
 
-    public boolean isBloqueado() { return bloqueado; }
-    
-    public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado;}
+    // Colunas acrescentadas ao banco para o login (veja alteracoes_banco.sql)
+    @Column(length = 160)
+    private String email;
+
+    @Column(length = 100)
+    private String senha;
+
+    public Aluno() {}
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public Turma getTurma() { return turma; }
+    public void setTurma(Turma turma) { this.turma = turma; }
+
+    public String getMatricula() { return matricula; }
+    public void setMatricula(String matricula) { this.matricula = matricula; }
+
+    public String getPrenome() { return prenome; }
+    public void setPrenome(String prenome) { this.prenome = prenome; }
+
+    public String getSobrenome() { return sobrenome; }
+    public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+
+    public String getNomeCompleto() { return prenome + " " + sobrenome; }
 }
-
-

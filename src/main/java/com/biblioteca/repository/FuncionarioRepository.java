@@ -1,14 +1,17 @@
 package com.biblioteca.repository;
 
-import java.util.Optional;
-import java.util.UUID;
-
+import com.biblioteca.entity.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.biblioteca.entity.Funcionario;
+import java.util.Optional;
 
-public interface FuncionarioRepository extends JpaRepository<Funcionario, UUID> {
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
 
-    Optional<Funcionario> findByMatricula(String matricula);
+    Optional<Funcionario> findByMatriculaFuncional(String matriculaFuncional);
+
     Optional<Funcionario> findByEmail(String email);
+
+    boolean existsByMatriculaFuncional(String matriculaFuncional);
+
+    boolean existsByEmail(String email);
 }
