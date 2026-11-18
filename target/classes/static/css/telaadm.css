@@ -29,7 +29,6 @@ a:hover{
 }
 
 .logo{
-    font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 4px;
 }
@@ -45,9 +44,7 @@ nav{
 }
 
 main{
-    background: url("livro.png") no-repeat center center;
-    background-size: cover;
-    height: 92vh;
+    background: url(".") no-repeat center center;
 }
 
 .nav-list{

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/telaadm.css">
+    <link rel="stylesheet" href="../static/css/configadm.css">
+    
+    <title>Configurações</title>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a class="logo" href=".">BIBLIOTECA VIRTUAL</a>
+            
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            
+            <ul class="nav-list">
+                <li><a href=".">Início</a></li>
+                <li><a href=".">Sobre</a></li>
+                <li><a href="Configadm.html">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main></main>
+
+    <main class="cfg">
+    <h1>Configurações</h1>
+    <p class="cfg-sub">Alunos cadastrados</p>
+
+    <p id="erro" class="cfg-erro" role="alert" hidden></p>
+    <p id="carregando" class="cfg-vazio">Carregando alunos…</p>
+    <ul id="lista" class="cfg-lista"></ul>
+    <p id="vazio" class="cfg-vazio" hidden>Nenhum aluno cadastrado ainda.</p>
+  </main>
+
+  <dialog id="dlg-editar">
+    <form id="form-editar" method="dialog">
+      <h2>Editar aluno</h2>
+      <div id="campos-editar"></div>
+      <div class="cfg-acoes">
+        <button type="button" class="btn" data-fechar>Cancelar</button>
+        <button type="submit" class="btn btn-principal">Salvar alterações</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-excluir">
+    <h2>Excluir aluno?</h2>
+    <p id="txt-excluir"></p>
+    <div class="cfg-acoes">
+      <button type="button" class="btn" data-fechar>Cancelar</button>
+      <button type="button" class="btn btn-perigo" id="confirmar-excluir">Excluir</button>
+    </div>
+  </dialog>
+
+  <script src="mobile-navbar.js"></script>
+  <script src="configuracoes.js"></script>
+
+</body>
+</html>
