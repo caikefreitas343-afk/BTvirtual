@@ -1,9 +1,9 @@
 package com.biblioteca.dto;
 
-import com.biblioteca.entity.Livro;
-
 import java.util.Comparator;
 import java.util.List;
+
+import com.biblioteca.entity.Livro;
 
 public record LivroDTO(
         Integer id,
