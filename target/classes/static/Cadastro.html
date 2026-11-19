@@ -5,32 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/stylecadastro.css">
 
+    <link rel="stylesheet" href="../static/css/stylecadastro.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,300&display=swap" rel="stylesheet">
-    <title>Cadastro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:ital,wght@1,300&display=swap" rel="stylesheet">
+    
+    <title>Cadastro Biblioteca Virtual</title>
 </head>
 <body>
     <main>
         <div class="container">
-            <p class="cadastro">Cadastro</p>
-            
-            <div class="panel">
-                <p>Nome de Usuário</p>
-                <label><input type="text" required></label>
-                <p>E-mail</p>
-                <label><input type="email" required></label>
-                <p>Senha</p>
-                <label><input type="password" required></label>
-                <br></br>
+            <div class="welcome">
+                <h1>Cadastro</h1>
+                <p>Faça seu cadastro e consulte nosso acervo</p>
             </div>
             
+            <div class="panel">
+                <div class="field">
+                    <label for="usuario">Nome de Usuário</label>
+                    <input type="text" id="usuario" name="usuario" autocomplete="username" required>
+                </div>
+
+                <div class="field">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+
+                <div class="field">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" autocomplete="new-password" required>
+                </div>
+            </div>
+            
+            
             <button type="submit">Cadastrar-se</button>
-        </div>
+            <p class="cadastro-link">Já possui o cadastro? <a href="Login.html">Faça login!</a></p>
         
+        </div>
     </main>
 </body>
 </html>

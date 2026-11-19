@@ -156,17 +156,17 @@ button:hover{
     background-color: #123370;
 }
 
-.cadastro-link {
+.login-link {
     font-size: 14px;
     text-align: center;
 }
 
-.cadastro-link a {
+.login-link a {
     color:  #0A172B;
     font-weight: bold;
     text-decoration: none;
 }
 
-.cadastro-link a:hover {
+.login-link a:hover {
     text-decoration: underline;
 }
