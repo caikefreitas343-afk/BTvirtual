@@ -9,6 +9,7 @@ import com.biblioteca.entity.Turma;
 import com.biblioteca.repository.AlunoRepository;
 import com.biblioteca.repository.MultaRepository;
 import com.biblioteca.repository.TurmaRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -99,7 +100,14 @@ public class AlunoService {
 
     // DELETE
     public void deletar(Integer id) {
-        alunoRepository.delete(buscarEntidade(id));
+        Aluno aluno = buscarEntidade(id);
+        try {
+            alunoRepository.delete(aluno);
+            alunoRepository.flush();   // executa o DELETE agora, para o erro cair dentro do try
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Não é possível excluir: o aluno tem empréstimos ou multas registrados");
+        }
     }
 
     private Aluno buscarEntidade(Integer id) {
